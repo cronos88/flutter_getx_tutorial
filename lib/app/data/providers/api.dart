@@ -1,25 +1,36 @@
+// Getx Snipper - getprovider
+
 import 'dart:convert';
 import 'package:getx_tutorial/app/data/model/model.dart';
 import 'package:http/http.dart' as http;
 import 'package:meta/meta.dart';
 
-//nossa url base
-const baseUrl = 'https://jsonplaceholder.typicode.com/posts/';
+//nuestra URL base
+const baseUrl = 'https://newsapi.org/v2/top-headlines?';
+const apiKey = '40687e10967c4140996afa4bc9aad334';
+const country = 'us';
 
-//nossa classe responsável por encapsular os métodos http
+//nuestra clase responsable de encapsular los métodos http
 class MyApiClient {
-//seu client http, pode ser http, http.Client, dio, apenas traga seus métodos para cá e funcionarão normalmente :D
+//su cliente http, puede ser http, http.Client, dio, solo traiga sus métodos aquí y funcionarán normalmente: D
   final http.Client httpClient;
   MyApiClient({@required this.httpClient});
 
-  //um exemplo rápido, aqui estamos recuperando todos os posts disponibilizados pela api(100)
+  //un ejemplo rápido, aquí estamos recuperando todas las publicaciones disponibles por api (100)
   Future<List<MyModel>> getAll() async {
     try {
-      var response = await httpClient.get(baseUrl);
+      final url = '${baseUrl}country=$country&apiKey=$apiKey';
+      print(url);
+      var response = await httpClient.get(url);
       if (response.statusCode == 200) {
-        Iterable jsonResponse = json.decode(response.body);
-        List<MyModel> listMyModel =
-            jsonResponse.map((model) => MyModel.fromJson(model)).toList();
+        final jsonResponse = json.decode(response.body);
+        // print('resp ${jsonResponse}');
+        final articles = jsonResponse['articles'];
+        print('Articulos: ${articles.length}');
+        List listMyModel =
+            articles.map((model) => MyModel.fromJson(model)).toList();
+
+        print(listMyModel.length);
         return listMyModel;
       } else
         print('erro');

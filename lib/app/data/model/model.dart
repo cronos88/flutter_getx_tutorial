@@ -1,20 +1,21 @@
 class MyModel {
-  int id;
+  String author;
   String title;
-  String body;
+  String description;
 
-  MyModel({id, title, body});
+  MyModel({author, title, body});
 
   MyModel.fromJson(Map<String, dynamic> json) {
-    this.id = json['id'];
+    this.author = json['author'];
     this.title = json['title'];
-    this.body = json['body'];
+    this.description = json['description'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.title;
-    data['body'] = this.body;
+    data['author'] = this.author;
+    data['title'] = this.title;
+    data['description'] = this.description;
     return data;
   }
 }

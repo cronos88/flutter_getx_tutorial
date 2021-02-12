@@ -47,7 +47,7 @@ class HomePage extends GetView<HomeController> {
                     final post = controller.postList[index];
                     return ListTile(
                       title: Text(post.title),
-                      subtitle: Text(post.body),
+                      subtitle: Text(post.description),
                     );
                   },
                 ))),
