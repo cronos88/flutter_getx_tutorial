@@ -24,14 +24,8 @@ class MyApiClient {
       var response = await httpClient.get(url);
       if (response.statusCode == 200) {
         final jsonResponse = json.decode(response.body);
-        // print('resp ${jsonResponse}');
         final articles = jsonResponse['articles'];
-        print('Articulos: ${articles.length}');
-        List listMyModel =
-            articles.map((model) => MyModel.fromJson(model)).toList();
-
-        print(listMyModel.length);
-        return listMyModel;
+        return List<MyModel>.from(articles.map((x) => MyModel.fromJson(x)));
       } else
         print('erro');
       return [];
